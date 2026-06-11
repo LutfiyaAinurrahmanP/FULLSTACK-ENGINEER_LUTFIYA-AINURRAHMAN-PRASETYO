@@ -23,7 +23,10 @@ class StoreController extends Controller
         $products = Product::with('inventory')
             ->when($request->boolean('flash_sale'), fn ($q) => $q->where('is_flash_sale', true))
             ->when($request->filled('search'), fn ($q) => $q->where('name', 'like', "%{$request->search}%"))
-            ->paginate(12)
+            ->orderBy('is_flash_sale', 'desc')
+            ->orderBy('id', 'desc')
+            ->paginate(8)
+            ->withQueryString()
             ->through(fn ($p) => [
                 'id'              => $p->id,
                 'name'            => $p->name,

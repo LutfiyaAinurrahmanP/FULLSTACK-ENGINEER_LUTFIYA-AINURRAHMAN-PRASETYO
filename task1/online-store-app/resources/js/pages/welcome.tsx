@@ -5,7 +5,15 @@ import { Zap, Package, ArrowRight, Shield } from 'lucide-react';
  * Welcome / Landing page — shown to unauthenticated users.
  * Showcases the online store with a call-to-action to the shop.
  */
-export default function Welcome() {
+interface WelcomeProps {
+    stats: {
+        products: number;
+        customers: number;
+        flash_sales: number;
+    };
+}
+
+export default function Welcome({ stats }: WelcomeProps) {
     return (
         <>
             <Head title="FlashStore — Online Store" />
@@ -53,8 +61,8 @@ export default function Welcome() {
                         </h1>
 
                         <p className="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-slate-400">
-                            Premium tech products at flash sale prices. Limited stock, massive discounts.
-                            Race condition–proof ordering system ensures fair access for everyone.
+                            Premium tech products at unbeatable flash sale prices.
+                            Experience a seamless, fair, and reliable shopping journey.
                         </p>
 
                         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -74,12 +82,11 @@ export default function Welcome() {
                             </Link>
                         </div>
 
-                        {/* Stats */}
                         <div className="mt-16 grid grid-cols-3 gap-8 border-t border-white/5 pt-12">
                             {[
-                                { label: 'Products', value: '100+' },
-                                { label: 'Happy Customers', value: '50K+' },
-                                { label: 'Flash Sales Today', value: '12' },
+                                { label: 'Products', value: `${stats.products}+` },
+                                { label: 'Happy Customers', value: `${stats.customers}+` },
+                                { label: 'Flash Sales Today', value: stats.flash_sales.toString() },
                             ].map((stat) => (
                                 <div key={stat.label} className="text-center">
                                     <div className="text-3xl font-black text-white">{stat.value}</div>
@@ -102,20 +109,20 @@ export default function Welcome() {
                             {[
                                 {
                                     icon: Shield,
-                                    title: 'Race Condition Safe',
-                                    desc: 'Pessimistic locking ensures fair stock allocation — no overselling, no negative inventory, even under heavy concurrent load.',
+                                    title: 'Reliable & Fair',
+                                    desc: 'Our advanced checkout system guarantees that the stock you see is what you get. No overselling or cart errors during high traffic.',
                                     color: 'violet',
                                 },
                                 {
                                     icon: Zap,
-                                    title: 'Flash Sales',
-                                    desc: 'Time-limited offers with deep discounts. Limited stock items sell out fast — our system handles thousands of simultaneous buyers.',
+                                    title: 'Exclusive Flash Deals',
+                                    desc: 'Time-limited offers with massive discounts. Our platform is built to handle thousands of simultaneous buyers effortlessly.',
                                     color: 'yellow',
                                 },
                                 {
                                     icon: Package,
-                                    title: 'Real-time Inventory',
-                                    desc: 'Live stock tracking with atomic decrements. When stock reaches 0, orders are immediately rejected — no exceptions.',
+                                    title: 'Live Stock Tracking',
+                                    desc: 'Stay updated with real-time stock availability, so you never miss out on your favorite items before they sell out.',
                                     color: 'emerald',
                                 },
                             ].map((feature) => (
